@@ -10,6 +10,8 @@ var axios = require("axios");
 var Spotify = require("node-spotify-api");
 // access your keys information
 var spotify = new Spotify(keys.spotify);
+// include the moment npm package for date formatting
+var moment = require("moment");
 
 var command = process.argv[2];
 var parameter = process.argv.slice(3).join("+");
@@ -19,6 +21,12 @@ function switchCase() {
         case 'spotify-this-song':
         spotifySong(parameter);
         break;
+        case 'movie-this':
+        movieOMDB(parameter);
+        break;
+        case 'concert-this':
+        bandsInTown(parameter);
+        break;
         
         default:
         display("Invalid. I don't understand");
@@ -26,11 +34,12 @@ function switchCase() {
     }
 };
 
-// Spotify function
+// Spotify API function
 function spotifySong(parameter) {
 
     var searchTrack;
-    if (parameter === undefined) {
+    
+    if (parameter === "") {
         searchTrack = "Ace of Base The Sign";
     }else{
         searchTrack = parameter;
@@ -45,6 +54,9 @@ function spotifySong(parameter) {
         } else {
             for (var i = 0; i < 5; i++){
             var track = data.tracks.items[i];
+            if (track.preview_url === null){
+                track.preview_url = "Not provided";
+            }
             console.log("\n-----------------\n");
             console.log("Artist: "  + track.artists[0].name);
             console.log("Song: " + track.name);
@@ -54,4 +66,59 @@ function spotifySong(parameter) {
         }
     });
 };
+
+// OMDB API function
+function movieOMDB(parameter){
+    if (parameter === "") {
+        parameter = "Mr. Nobody";
+    }
+    var queryURL = "http://www.omdbapi.com/?t=" + parameter + "&y=&plot=short&apikey=trilogy";
+
+        axios.get(queryURL).then(
+            function(response) {
+                if (response.data.tomatoRating = "undefined"){
+                    response.data.tomatoRating = "Not provided";
+                }
+                console.log("Title: " + response.data.Title +"\nYear: " + response.data.Year + "\nIMDB Rating: " + response.data.imdbRating + 
+                "\nRotten Tomatoes Rating: " + response.data.tomatoRating + "\nCountry: " + response.data.Country + "\nLanguage: " + response.data.Language +
+                "\nPlot: " + response.data.Plot + "\nActors: " + response.data.Actors);
+            }
+        );
+    };
+
+// BandsInTown API function
+function bandsInTown(parameter) {
+    if (parameter === "") {
+        console.log("You forgot to enter the band");
+    } else {
+    var queryBandsURL = "https://rest.bandsintown.com/artists/" + parameter + "/events?app_id=codingbootcamp";
+    
+        axios.get(queryBandsURL).then(
+            function(response) {
+                var concert = response.data;
+                console.log(concert.length);
+                if (concert.length > 5) {
+                    for (var j = 0; j < 5; j++) {
+                        var convertedDate = moment(concert[j].datetime).format("MM/DD/YYYY");
+                        console.log("\n------------------------------\n");
+                        console.log("Venue: " + concert[j].venue.name);
+                        console.log("Location: " + concert[j].venue.city);
+                        console.log(convertedDate);
+                    };
+                    console.log("\n------------------------------\n");
+                } else {
+                    for (var j = 0; j < concert.length; j++) {
+                        var convertedDate = moment(concert[j].datetime).format("MM/DD/YYYY");
+                        console.log("\n------------------------------\n");
+                        console.log("Venue: " + concert[j].venue.name);
+                        console.log("Location: " + concert[j].venue.city);
+                        console.log(convertedDate);
+                    };
+                    console.log("\n------------------------------\n");
+                }
+            }
+        );
+    };
+};
+
 switchCase();
