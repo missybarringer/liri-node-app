@@ -1,28 +1,49 @@
 
 var axios = require("axios");
-var nodeArgType = process.argv[2];
-var nodeArgs = process.argv;
-var movieName = "";
 var bandName = "";
+var moment = require("moment");
+var command = process.argv[2];
+var parameter = process.argv.slice(3).join("+");
 
-// loop through all the words in the node argument
-if (nodeArgType === "concert-this"){
-for (var i = 3; i < nodeArgs.length; i++) {
-    if (i > 3 && i < nodeArgs.length) {
-        bandName = bandName + " " + nodeArgs[i];
-    } else {
-        bandName += nodeArgs[i];
+function switchCase() {
+    switch(command) {
+        case 'concert-this':
+        bandsInTown(parameter);
+        break;
+        
+        default:
+        display("Invalid. I don't understand");
+        break;
     }
-} 
-}
+};
 
-
-console.log(nodeArgType);
-
-var queryBandsURL = "https://rest.bandsintown.com/artists/" + bandName + "?app_id=codingbootcamp";
-
-axios.get(queryBandsURL).then(
-    function(response) {
-        console.log("Title: " + response.data.name);
-    }
-);
+// var spotify = "Spotify"
+function bandsInTown(parameter) {
+    var bandName = parameter;
+    
+    var queryBandsURL = "https://rest.bandsintown.com/artists/" + bandName + "/events?app_id=codingbootcamp";
+    
+    axios.get(queryBandsURL).then(
+        function(response) {
+            var concert = response.data;
+            console.log(concert.length);
+            if (concert.length > 5) {
+                for (var j = 0; j < 5; j++) {
+                    var convertedDate = moment(concert[j].datetime).format("MM/DD/YYYY");
+                    console.log("\n------------------------------\n");
+                    console.log("Venue: " + concert[j].venue.name);
+                    console.log("Location: " + concert[j].venue.city);
+                    console.log(convertedDate);
+                };
+                console.log("\n------------------------------\n");
+            } else {
+                for (var j = 0; j < concert.length; j++) {
+                    console.log("Venue: " + concert[j].venue.name);
+                    console.log("Location: " + concert[j].venue.city);
+                };
+                console.log("\n------------------------------\n");
+            }
+        }
+    );
+};
+switchCase();

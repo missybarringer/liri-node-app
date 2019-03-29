@@ -26,7 +26,7 @@ function switchCase() {
     }
 };
 
-// var spotify = "Spotify"
+// Spotify function
 function spotifySong(parameter) {
 
     var searchTrack;
