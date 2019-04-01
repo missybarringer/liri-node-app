@@ -27,9 +27,12 @@ function switchCase() {
         case 'concert-this':
         bandsInTown(parameter);
         break;
-        
+        case 'do-what-it-says':
+        readRandom(parameter);
+        break;
+
         default:
-        display("Invalid. I don't understand");
+        console.log("Invalid. I don't understand");
         break;
     }
 };
@@ -119,6 +122,48 @@ function bandsInTown(parameter) {
             }
         );
     };
+};
+
+// read randome.txt file to figure out which function to run
+function readRandom() {
+    fs.readFile("random.txt", "utf8", function(error, data) {
+        // log any errors to the console
+        if (error) {
+            return console.log(error);
+        }
+        var dataArr = data.split(",")
+        var parameter = (dataArr[1]);
+        var commandText = data.substr(0,data.indexOf(","))
+        console.log(commandText);
+        // var parameter = data.replace(/,/g , " ");
+        console.log(parameter);
+        switch(commandText) {
+            case 'spotify-this-song':
+            spotifySong(parameter);
+            break;
+            case 'movie-this':
+            movieOMDB(parameter);
+            break;
+            case 'concert-this':
+            bandsInTown(parameter);
+            break;
+    
+            default:
+            console.log("Invalid. I don't understand");
+            break;
+        }
+    });
+};
+
+function display(printInfo) {
+    console.log(printInfo);
+    fs.appendFile("log.txt", printInfo, function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Logged");
+        }
+    });
 };
 
 switchCase();
