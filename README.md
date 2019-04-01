@@ -6,8 +6,7 @@
 * LIRI will search Spotify for songs, Bands in Town for concerts, and OMDB for movies.
 
 #### To View the app in action
-* [View Liri App in action](http://www.webwabisabi.com/assets/media/Liri-bot.webm) or navigate to the media folder and click on the Liri-bot.webm & click View Raw to download the video so that you can play it.
-* <video src="http://www.webwabisabi.com/assets/media/Liri-bot.webm" poster="assets/images/liri.PNG" class="card-img-top sm" alt="..." controls preload></video>
+* [Click here to View Liri App in action](http://www.webwabisabi.com/assets/media/Liri-bot.webm) or navigate to the media folder and click on the Liri-bot.webm & click View Raw to download the video so that you can play it.
 
 
 ### What Each Command Should Do
