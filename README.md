@@ -35,7 +35,7 @@
 
    * If no song is provided then your program will default to "The Sign" by Ace of Base.
 
-   * You will utilize the node-spotify-api package in order to retrieve song information from the Spotify API.
+   * Utilize the node-spotify-api package in order to retrieve song information from the Spotify API.
 
 3. `node liri.js movie-this '<movie name here>'`
 
@@ -54,7 +54,7 @@
 
    * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
 
-   * You'll use the `axios` package to retrieve data from the OMDB API.
+   * Use the `axios` package to retrieve data from the OMDB API.
 
 4. `node liri.js do-what-it-says`
 
