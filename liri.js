@@ -60,11 +60,13 @@ function spotifySong(parameter) {
             if (track.preview_url === null){
                 track.preview_url = "Not provided";
             }
-            console.log("\n-----------------\n");
-            console.log("Artist: "  + track.artists[0].name);
-            console.log("Song: " + track.name);
-            console.log("Link: " + track.preview_url);
-            console.log("Album: " + track.album.name);
+            var mySong = "\n+++++++++++++++++++\n" + "\n\n" +
+                         "Artist: " + track.artists[0].name + "\n" +
+                         "Song: " + track.name + "\n" +
+                         "Link: " + track.preview_url + "\n" +
+                         "Album: " + track.album.name + "\n"
+                         console.log(mySong);
+                         writeToLog(mySong);
             }
         }
     });
@@ -82,9 +84,17 @@ function movieOMDB(parameter){
                 if (response.data.tomatoRating = "undefined"){
                     response.data.tomatoRating = "Not provided";
                 }
-                console.log("Title: " + response.data.Title +"\nYear: " + response.data.Year + "\nIMDB Rating: " + response.data.imdbRating + 
-                "\nRotten Tomatoes Rating: " + response.data.tomatoRating + "\nCountry: " + response.data.Country + "\nLanguage: " + response.data.Language +
-                "\nPlot: " + response.data.Plot + "\nActors: " + response.data.Actors);
+                var myMovie = "\n+++++++++++++++++++\n" + "\n" +
+                "Title: " + response.data.Title + "\n" +
+                "Year: " + response.data.Year + "\n" +
+                "IMDB Rating: " + response.data.imdbRating + "\n" +
+                "Rotten Tomatoes Rating: " + response.data.tomatoRating + "\n" +
+                "Country: " + response.data.Country + "\n" +
+                "Language: " + response.data.Language + "\n" +
+                "Plot: " + response.data.Plot + "\n" +
+                "Actors: " + response.data.Actors
+                console.log(myMovie);
+                writeToLog(myMovie);
             }
         );
     };
@@ -103,19 +113,23 @@ function bandsInTown(parameter) {
                 if (concert.length > 5) {
                     for (var j = 0; j < 5; j++) {
                         var convertedDate = moment(concert[j].datetime).format("MM/DD/YYYY");
-                        console.log("\n------------------------------\n");
-                        console.log("Venue: " + concert[j].venue.name);
-                        console.log("Location: " + concert[j].venue.city);
-                        console.log(convertedDate);
+                        var myBand = "\n+++++++++++++++++++\n" + "\n" +
+                                     "Venue: " + concert[j].venue.name + "\n" +
+                                     "Location: " + concert[j].venue.city + "\n" +
+                                     convertedDate
+                        console.log(myBand);
+                        writeToLog(myBand);
                     };
                     console.log("\n------------------------------\n");
                 } else {
                     for (var j = 0; j < concert.length; j++) {
                         var convertedDate = moment(concert[j].datetime).format("MM/DD/YYYY");
-                        console.log("\n------------------------------\n");
-                        console.log("Venue: " + concert[j].venue.name);
-                        console.log("Location: " + concert[j].venue.city);
-                        console.log(convertedDate);
+                        var myBand = "\n+++++++++++++++++++\n" + "\n" +
+                                     "Venue: " + concert[j].venue.name + "\n" +
+                                     "Location: " + concert[j].venue.city + "\n" +
+                                     convertedDate
+                        console.log(myBand);
+                        writeToLog(myBand);
                     };
                     console.log("\n------------------------------\n");
                 }
@@ -135,7 +149,6 @@ function readRandom() {
         var parameter = (dataArr[1]);
         var commandText = data.substr(0,data.indexOf(","))
         console.log(commandText);
-        // var parameter = data.replace(/,/g , " ");
         console.log(parameter);
         switch(commandText) {
             case 'spotify-this-song':
@@ -155,13 +168,16 @@ function readRandom() {
     });
 };
 
-function display(printInfo) {
-    console.log(printInfo);
+// Bonus
+// In addition to logging the data to the terminal window, output the data to a .txt file called log.txt
+// Append each command to the file without overwriting the file
+function writeToLog(printInfo) {
     fs.appendFile("log.txt", printInfo, function(err) {
         if (err) {
             console.log(err);
         } else {
-            console.log("Logged");
+            console.log("\n+++++++++++++++++++\n");
+            console.log("Logged to log.txt file");
         }
     });
 };
