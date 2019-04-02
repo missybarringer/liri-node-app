@@ -1,3 +1,10 @@
+// Make it so liri.js can take in one of the following commands:
+// * `concert-this`
+// * `spotify-this-song`
+// * `movie-this`
+// * `do-what-it-says`
+// Approached by getting all 3 API's successfully retrieving the appropriate data in their own .js file
+// then merged into 1 file to create liri.js
 // code to read and set any environment variables with the dotenv package
 require("dotenv").config();
 
