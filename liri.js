@@ -6,6 +6,7 @@
 // Approached by getting all 3 API's successfully retrieving the appropriate data in their own .js file
 // then merged into 1 file to create liri.js
 // code to read and set any environment variables with the dotenv package
+// Added to portfolio at https://missybarringer.github.io/ & http://www.webwabisabi.com/
 require("dotenv").config();
 
 var fs = require("fs");
